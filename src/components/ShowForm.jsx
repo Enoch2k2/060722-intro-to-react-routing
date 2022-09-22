@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { ShowContext } from '../context/shows';
+import { useHandleChange } from '../hooks/shows';
 
-const ShowForm = ({ addShow }) => {
+const ShowForm = ({ id }) => {
 
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [name, handleChangeName] = useHandleChange('');
+  const [description, handleChangeDescription] = useHandleChange('');
+  const { addShow } = useContext(ShowContext);
 
   const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    addShow({ name, description });
+    addShow({ name, description, id: id.current++ });
 
     navigate("/shows")
   }
@@ -22,11 +25,11 @@ const ShowForm = ({ addShow }) => {
       <form onSubmit={ handleSubmit }>
         <div>
           <label htmlFor="name">Name: </label>
-          <input type="text" name="name" id="name" value={ name } onChange={ e => setName(e.target.value) } />
+          <input type="text" name="name" id="name" value={ name } onChange={ handleChangeName } />
         </div>
         <div>
           <label htmlFor="description">Description: </label><br />
-          <textarea name="description" id="description" cols="30" rows="10" value={ description } onChange={ e => setDescription(e.target.value)}></textarea>
+          <textarea name="description" id="description" cols="30" rows="10" value={ description } onChange={ handleChangeDescription }></textarea>
         </div>
 
         <input type="submit" value="Create Show" />

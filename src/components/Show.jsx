@@ -1,10 +1,13 @@
-import React from 'react'
-import { slugify } from '../Globals'
+import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
+import { ShowContext } from '../context/shows';
 
-const Show = ({ shows }) => {
-  const { slug } = useParams();
-  const show = shows.find(show => slugify(show.name) === slug )
+const Show = () => {
+  const { id } = useParams();
+  const { shows } = useContext(ShowContext);
+
+  
+  const show = shows.find(show => show.id.toString() === id )
 
 
   if(!show) {

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ShowCard from './ShowCard'
+import { ShowContext } from '../context/shows'
 
-const ShowList = ({ shows }) => {
-
+const ShowList = () => {
+  const { shows } = useContext(ShowContext)
   const showCards = shows.map((show, idx) => <ShowCard key={ idx } show={show} />)
 
   return (
